@@ -4,20 +4,18 @@ import java.util.stream.LongStream;
 public class MathSolver {
 
 
-    public static Long fact(Long n) {
+    private static Long fact(Long n) {
         return LongStream.rangeClosed(1, n)
                 .reduce(1, (long x, long y) -> x * y);
     }
 
 
-    public static double asin(Double x) {
+    private static double asin(Double x) {
         long lim = 30;
         return LongStream.iterate(0, n -> n + 1).limit(lim)
-                .mapToDouble(n -> {
-                    double bc = fact(2*n)/Math.pow(fact(n), 2);
-                    double k = Math.pow(2, -2*n);
-                    return k*bc*(Math.pow(x, 2.0*n+1.0)/(2.0*n+1.0));
-                })
+                .mapToDouble(n ->
+                    Math.pow(2, -2*n)*(fact(2*n)/Math.pow(fact(n), 2))*(Math.pow(x, 2.0*n+1.0)/(2.0*n+1.0))
+                )
                 .sum();
     }
 
