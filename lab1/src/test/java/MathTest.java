@@ -10,11 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MathTest {
     double delta = 1e-4;
 
-    @ParameterizedTest(name = "{index}: x = {0}")
-    @ValueSource(doubles = {0.0})
-    void testZero(double arg) {
-        assertEquals(0, MathSolver.calcAsin(arg));
-    }
 
     @ParameterizedTest(name = "{index}: x = {0}")
     @ValueSource(doubles = {Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.NaN})
@@ -23,7 +18,7 @@ public class MathTest {
     }
 
     @ParameterizedTest(name = "{index}: x = {0}")
-    @ValueSource(doubles = {0.5, 0.70710678118, 1})
+    @ValueSource(doubles = {0.0, 0.5, 0.70710678118, 1})
     void testPositive(double arg) {
         assertEquals(Math.asin(arg), MathSolver.calcAsin(arg), delta);
     }
