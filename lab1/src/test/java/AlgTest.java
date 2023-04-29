@@ -110,7 +110,6 @@ public class AlgTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class TestQuadProbe {
         ClosedHashingProb<String> set = new ClosedHashingProb<>(30, ClosedHashingProb.Probe.QUAD);
-        static int[] expected_ind = {22, 23, 6, 7, 25, 23, 24, 8, 9, 28, 27, 0, 30};
 
 
 

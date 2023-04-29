@@ -19,7 +19,7 @@ public class CrewMember extends Person{
         ASTRONAUT
     }
 
-    CrewMember(String name, int age, Reason reason, StatusType type) {
+    public CrewMember(String name, int age, Reason reason, StatusType type) {
         super(name, age);
         this.reason  = reason;
         this.status = type;
