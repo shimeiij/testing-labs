@@ -1,13 +1,14 @@
 package org.testing.alg;
 
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 public class ClosedHashingProb<E>  {
     private static final float LF = 0.75F;
-    private static final int CAPACITY = 101;
+    private static final int CAPACITY = 30;
     private int size = 0;
     private Object[] data;
-    Probe prob;
+    Probe prob = Probe.LINEAR;
 
 
     private static class Deleted<E> {
@@ -40,6 +41,14 @@ public class ClosedHashingProb<E>  {
     public ClosedHashingProb(Probe prob) {
         data = new Object[CAPACITY];
         this.prob = prob;
+    }
+
+    public ClosedHashingProb(int capacity) {
+        data = new Object[primeUp(capacity)];
+    }
+
+    public ClosedHashingProb() {
+        data = new Object[CAPACITY];
     }
 
 
@@ -151,7 +160,9 @@ public class ClosedHashingProb<E>  {
                     return first_del_pos;
                 }
             }
-            else if (data[pos].equals(obj)) return -(pos+1);
+            else if (data[pos].equals(obj)){
+                return -(pos+1);
+            }
             else if (data[pos] instanceof Deleted) {
                 if (((Deleted<E>) data[pos]).val.equals(obj)) {
                     return pos;
@@ -176,8 +187,22 @@ public class ClosedHashingProb<E>  {
         };
     }
 
+    private boolean isFull() {
+        int cnt_el = 0;
+        for (Object datum : data) {
+            if (datum != null) {
+                if (datum instanceof Deleted) continue;
+                cnt_el++;
+            }
+        }
+        return cnt_el == data.length;
+    }
+
 
     public boolean insert(E el) {
+        if (isFull()) {
+            throw new ArrayIndexOutOfBoundsException("all array is full");
+        }
         int pos = probe(el);
         if (pos < 0) {
             return false;
@@ -199,14 +224,15 @@ public class ClosedHashingProb<E>  {
                 if (data[i] instanceof Deleted) {
                     if (data[i].equals(obj)) {
                         System.out.println("deleted");
-                        return -1;
+                        break;
                     }
                 } else {
                     if (data[i].equals(obj)) return i;
                 }
             }
         }
-        return -1;
+        // heh
+        throw new NoSuchElementException("no such el :c");
     }
 
     public boolean remove(Object obj) {
@@ -240,5 +266,17 @@ public class ClosedHashingProb<E>  {
                 }
             }
         }
+    }
+
+    public Probe getProb() {
+        return prob;
+    }
+
+    public void setProb(Probe prob) {
+        this.prob = prob;
+    }
+
+    public Object[] getData() {
+        return data;
     }
 }
