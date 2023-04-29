@@ -2,7 +2,7 @@
 <ruleset name="Custom ruleset"
          xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.net/ruleset_2_0_0.xsd ">
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.net/ruleset_2_0_0.xsd">
     <description>PMD configuration</description>
 
     <rule ref="category/java/bestpractices.xml">
@@ -40,8 +40,7 @@
     <rule ref="category/java/codestyle.xml/LinguisticNaming">
         <properties>
             <property name="checkSetters" value="false"/>
-            <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceBodyDeclaration/Annotation/MarkerAnnotation//Name[@Image='Test']"/>
+            <property name="violationSuppressXPath" value="//ClassOrInterfaceBodyDeclaration/Annotation/MarkerAnnotation//Name[@Image='Test']"/>
         </properties>
     </rule>
 
