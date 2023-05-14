@@ -4,7 +4,7 @@ public class Person implements Entity{
     String name;
     int age;
 
-    Person(String name, int age) {
+    Person(final String name,final int age) {
         this.name = name;
         this.age = age;
     }
@@ -15,7 +15,7 @@ public class Person implements Entity{
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -23,7 +23,7 @@ public class Person implements Entity{
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(final int age) {
         this.age = age;
     }
 

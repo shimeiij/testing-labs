@@ -2,14 +2,14 @@ package org.testing.domain;
 
 public class Engine implements Entity{
     String name;
-    boolean isRefueled = false;
-    int fuel = 0;
+    boolean isRefueled;
+    long fuel;
 
-    Engine(EngineType type) {
+    Engine(final EngineType type) {
         this.name = type.name();
     }
 
-    public void refuelEngine(int fuel) {
+    public void refuelEngine(final int fuel) {
         this.fuel = fuel;
         isRefueled = true;
     }
@@ -20,7 +20,7 @@ public class Engine implements Entity{
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -28,7 +28,7 @@ public class Engine implements Entity{
         return isRefueled;
     }
 
-    public int getFuel() {
+    public long getFuel() {
         return fuel;
     }
 }

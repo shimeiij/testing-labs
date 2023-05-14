@@ -1,20 +1,19 @@
 package org.testing.alg;
 
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 public class ClosedHashingProb<E>  {
-    private static final float LF = 0.75F;
     private static final int CAPACITY = 30;
-    private int size = 0;
-    private Object[] data;
+    long size;
+    int firstDelPos = -1;
+    private final Object[] data;
     Probe prob = Probe.LINEAR;
 
 
     private static class Deleted<E> {
         E val;
 
-        Deleted(E val) {
+        Deleted(final E val) {
             this.val = val;
         }
 
@@ -33,17 +32,17 @@ public class ClosedHashingProb<E>  {
         DOUBLE
     }
 
-    public ClosedHashingProb(int capacity, Probe prob) {
+    public ClosedHashingProb(final int capacity,final Probe prob) {
         data = new Object[primeUp(capacity)];
         this.prob = prob;
     }
 
-    public ClosedHashingProb(Probe prob) {
+    public ClosedHashingProb(final Probe prob) {
         data = new Object[CAPACITY];
         this.prob = prob;
     }
 
-    public ClosedHashingProb(int capacity) {
+    public ClosedHashingProb(final int capacity) {
         data = new Object[primeUp(capacity)];
     }
 
@@ -52,47 +51,46 @@ public class ClosedHashingProb<E>  {
     }
 
 
-    private static int primeUp(int n) {
+    private static int primeUp(final int n) {
         int prime = n;
         if (prime % 2 == 0) {
             prime += 1;
         }
-        boolean found_prime;
+        boolean foundPrime;
         do {
-            found_prime = true;
+            foundPrime = true;
             for (int i = 3; i <= Math.sqrt(prime); i += 2) {
                 if (prime % i == 0) {
-                    found_prime = false;
+                    foundPrime = false;
                     prime += 2;
                     break;
                 }
             }
         }
-        while (!found_prime);
+        while (!foundPrime);
         return prime;
     }
 
 
-    private int hash2(Object obj) {
-        int max = data.length - 2;
+    private int hash2(final Object obj) {
+        final int max = data.length - 2;
         return max - Math.abs(obj.hashCode() % max);
     }
 
-    private int hash(Object obj) {
+    private int hash(final Object obj) {
         return Math.abs(obj.hashCode() % data.length);
     }
 
     @SuppressWarnings("unchecked")
-    private int linearProbe(Object obj) {
+    private int linearProbe(final Object obj) {
         int pos = hash(obj);
-        int first_del_pos = -1;
         while(true) {
             if (data[pos] == null) {
-                if (first_del_pos == -1) {
+                if (firstDelPos == -1) {
                     return pos;
                 }
                 else {
-                    return first_del_pos;
+                    return firstDelPos;
                 }
             } else if (data[pos].equals(obj)) {
                 return -(pos+1);
@@ -101,8 +99,8 @@ public class ClosedHashingProb<E>  {
                 if (((Deleted<E>) data[pos]).val.equals(obj)) {
                     return pos;
                 }
-                else if (first_del_pos == -1) {
-                    first_del_pos = pos;
+                else if (firstDelPos == -1) {
+                    firstDelPos = pos;
                 }
                 pos = (pos + 1) % data.length;
             }
@@ -112,18 +110,19 @@ public class ClosedHashingProb<E>  {
         }
     }
 
+
     @SuppressWarnings("unchecked")
-    private int quadraticProbe(Object obj) {
+    private int quadraticProbe(final Object obj) {
         int pos = hash(obj);
         int i = 1;
-        int first_del_pos = -1;
+        int delPos = -1;
         while (true) {
             if (data[pos] == null) {
-                if (first_del_pos == -1) {
+                if (delPos == -1) {
                     return pos;
                 }
                 else {
-                    return first_del_pos;
+                    return delPos;
                 }
             }
             else if (data[pos].equals(obj)) {
@@ -133,8 +132,8 @@ public class ClosedHashingProb<E>  {
                 if (((Deleted<E>) data[pos]).val.equals(obj)) {
                     return pos;
                 }
-                else if (first_del_pos == -1) {
-                    first_del_pos = pos;
+                else if (delPos == -1) {
+                    delPos = pos;
                 }
                 pos = (pos+i) % data.length;
                 i += 2;
@@ -146,18 +145,18 @@ public class ClosedHashingProb<E>  {
         }
     }
 
+
     @SuppressWarnings("unchecked")
-    private int doubleProbe(Object obj) {
+    private int doubleProbe(final Object obj) {
         int pos = hash(obj);
-        int amt = hash2(obj);
-        int first_del_pos = -1;
+        final int amt = hash2(obj);
         while(true) {
             if (data[pos] == null) {
-                if (first_del_pos == -1) {
+                if (firstDelPos == -1) {
                     return pos;
                 }
                 else {
-                    return first_del_pos;
+                    return firstDelPos;
                 }
             }
             else if (data[pos].equals(obj)){
@@ -167,8 +166,8 @@ public class ClosedHashingProb<E>  {
                 if (((Deleted<E>) data[pos]).val.equals(obj)) {
                     return pos;
                 }
-                else if (first_del_pos == -1) {
-                    first_del_pos = pos;
+                else if (firstDelPos == -1) {
+                    firstDelPos = pos;
                 }
                 pos = (pos + amt) % data.length;
             }
@@ -178,7 +177,7 @@ public class ClosedHashingProb<E>  {
         }
     }
 
-    private int probe(Object obj) {
+    private int probe(final Object obj) {
         return switch (prob) {
             case QUAD -> quadraticProbe(obj);
             case LINEAR -> linearProbe(obj);
@@ -188,22 +187,24 @@ public class ClosedHashingProb<E>  {
     }
 
     private boolean isFull() {
-        int cnt_el = 0;
-        for (Object datum : data) {
+        int cntEl = 0;
+        for (final Object datum : data) {
             if (datum != null) {
-                if (datum instanceof Deleted) continue;
-                cnt_el++;
+                if (datum instanceof Deleted){
+                    continue;
+                }
+                cntEl++;
             }
         }
-        return cnt_el == data.length;
+        return cntEl == data.length;
     }
 
 
-    public boolean insert(E el) {
+    public boolean insert(final E el) {
         if (isFull()) {
             throw new ArrayIndexOutOfBoundsException("all array is full");
         }
-        int pos = probe(el);
+        final int pos = probe(el);
         if (pos < 0) {
             return false;
         }
@@ -214,69 +215,61 @@ public class ClosedHashingProb<E>  {
         }
     }
 
-    public boolean contains(Object obj) {
+    public boolean contains(final Object obj) {
         return probe(obj) < 0;
     }
 
-    public int find(Object obj) {
+    public int find(final Object obj) {
         for (int i = 0; i < data.length; i++) {
             if (data[i] != null) {
                 if (data[i] instanceof Deleted) {
                     if (data[i].equals(obj)) {
-                        System.out.println("deleted");
                         break;
                     }
                 } else {
-                    if (data[i].equals(obj)) return i;
+                    if (data[i].equals(obj)){
+                        return i;
+                    }
                 }
             }
         }
-        // heh
         throw new NoSuchElementException("no such el :c");
     }
 
-    public boolean remove(Object obj) {
-        int pos = probe(obj);
+    public boolean remove(final Object obj) {
+        final int pos = probe(obj);
         if (pos >= 0) {
             return false;
         }
         else {
             --size;
-            int del_pos = -(pos+1);
-            data[del_pos] = new Deleted<>(data[del_pos]);
+            final int delPos = -(pos+1);
+            data[delPos] = new Deleted<>(data[delPos]);
             return true;
         }
     }
 
-    public void printTable() {
-        for (int i = 0; i < data.length; i++) {
-            if (data[i] != null) {
-                if (data[i] instanceof Deleted) {
-                    System.out.println(i + ":" + "[" + data[i] + "]");
-                    continue;
-                }
-                else {
-                    System.out.println(i + ":" + data[i]);
-                }
-                int h = hash(data[i]);
-                if (h == i) System.out.println(" (*)");
-                else {
-                    System.out.println(" (hash=" + h + ")");
-                    if (prob.equals(Probe.DOUBLE)) System.out.println(" (hash2=" + hash2(data[i]) + ")");
-                }
-            }
-        }
-    }
+//    public void printTable() {
+//        for (int i = 0; i < data.length; i++) {
+//            if (data[i] != null) {
+//                if (data[i] instanceof Deleted) {
+//                    System.out.println(i + ":" + "[" + data[i] + "]");
+//                    continue;
+//                }
+//                else {
+//                    System.out.println(i + ":" + data[i]);
+//                }
+//                int h = hash(data[i]);
+//                if (h == i) System.out.println(" (*)");
+//                else {
+//                    System.out.println(" (hash=" + h + ")");
+//                    if (prob.equals(Probe.DOUBLE)) System.out.println(" (hash2=" + hash2(data[i]) + ")");
+//                }
+//            }
+//        }
+//    }
 
-    public Probe getProb() {
-        return prob;
-    }
-
-    public void setProb(Probe prob) {
+    public void setProb(final Probe prob) {
         this.prob = prob;
-    }
-
-    public Object[] getData() {
-        return data;
     }
 }

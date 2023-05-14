@@ -1,26 +1,25 @@
+package domain;
+
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.testing.alg.ClosedHashingProb;
+import org.testing.domain.Condition;
 import org.testing.domain.CrewMember;
 import org.testing.domain.EngineType;
 import org.testing.domain.SpaceShip;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class DomainModelTest {
+class DomainModelTest {
     SpaceShip ship = new SpaceShip("Золотое сердце");
-    static List<CrewMember> crew = List.of(new CrewMember[]{
+    static final List<CrewMember> CREW = List.of(new CrewMember[]{
             new CrewMember("aa", 1, CrewMember.Reason.PHYSICAL_PRINCIPLE, CrewMember.StatusType.PILOT),
             new CrewMember("gojo", 100, CrewMember.Reason.ACCIDENT, CrewMember.StatusType.CAPTAIN),
             new CrewMember("haat guy", 123, CrewMember.Reason.ORDER, CrewMember.StatusType.ENGINEER)
@@ -28,27 +27,27 @@ public class DomainModelTest {
 
     @ParameterizedTest
     @MethodSource("provideEngineArgs")
-    void testDifEngineFlying(EngineType type, int fuelCap) {
-        ship.setCrew(crew);
-        ship.setEngine(type);
+    void testDifEngineFlying(final EngineType type, final int fuelCap) {
+        ship.getCrewHolder().setCrew(CREW);
+        ship.getController().setEngine(type);
         ship.setFuelTank(fuelCap);
-        assertEquals(type, ship.getEngineType());
+        assertEquals(type, ship.getController().getEngineType());
         assertEquals(ship.getName() + " взлетел", ship.takeOff());
         assertEquals(ship.getName() + " летит в космосе", ship.fly());
         assertEquals(ship.getName() + " может только дрейфовать!", ship.fly());
         assertEquals(ship.getName() + " дрейфует в космосе", ship.drift());
         assertEquals(ship.getName() + " потерпевает крушение", ship.drift());
-        assertEquals(SpaceShip.Condition.CRUSHED, ship.getCondition());
-        assertTrue(ship.getCrew().isEmpty());
+        assertEquals(Condition.CRUSHED, ship.getController().getCondition());
+        assertTrue(ship.getCrewHolder().isCrewEmpty());
     }
 
     @ParameterizedTest
     @MethodSource("provideSuccessLandArg")
-    void testSuccessLanding(EngineType type, int fuel) {
-        ship.setCrew(crew);
-        ship.setEngine(type);
+    void testSuccessLanding(final EngineType type,final int fuel) {
+        ship.getCrewHolder().setCrew(CREW);
+        ship.getController().setEngine(type);
         ship.setFuelTank(fuel);
-        assertEquals(type, ship.getEngineType());
+        assertEquals(type, ship.getController().getEngineType());
         assertEquals(ship.getName() + " взлетел", ship.takeOff());
         assertEquals(ship.getName() + " летит в космосе", ship.fly());
         assertEquals(ship.getName() + " успешно приземлился", ship.landOn());
@@ -56,11 +55,11 @@ public class DomainModelTest {
 
     @ParameterizedTest
     @MethodSource("provideEngineArgs")
-    void testFailedLanding(EngineType type, int fuel) {
-        ship.setCrew(crew);
-        ship.setEngine(type);
+    void testFailedLanding(final EngineType type, final int fuel) {
+        ship.getCrewHolder().setCrew(CREW);
+        ship.getController().setEngine(type);
         ship.setFuelTank(fuel);
-        assertEquals(type, ship.getEngineType());
+        assertEquals(type, ship.getController().getEngineType());
         assertEquals(ship.getName() + " взлетел", ship.takeOff());
         assertEquals(ship.getName() + " летит в космосе", ship.fly());
         assertEquals(ship.getName() + " недостаточно топлива для приземления!", ship.landOn());
@@ -68,32 +67,32 @@ public class DomainModelTest {
 
     @ParameterizedTest
     @MethodSource("provideAllCrewMembers")
-    void testCrewMembers(CrewMember person) {
-        ship.addCrewMember(person);
-        assertTrue(ship.isCrewMember(person));
+    void testCrewMembers(final CrewMember person) {
+        ship.getCrewHolder().addCrewMember(person);
+        assertTrue(ship.getCrewHolder().isCrewMember(person));
     }
 
     @Test
     void testCheckCrew() {
-        CrewMember member = new CrewMember("aska", 13, CrewMember.Reason.WILL, CrewMember.StatusType.PILOT);
-        ship.addCrewMember(member);
-        assertTrue(ship.isCrewMember(member));
-        ship.overBoard(member);
-        assertFalse(ship.isCrewMember(member));
-        ship.addCrewMember(member);
-        ship.setCrew(crew);
-        ship.overBoardAll();
-        assertTrue(ship.getCrew().isEmpty());
-        Exception exception = assertThrows(IllegalStateException.class, () -> ship.checkCrew());
+        final CrewMember member = new CrewMember("aska", 13, CrewMember.Reason.WILL, CrewMember.StatusType.PILOT);
+        ship.getCrewHolder().addCrewMember(member);
+        assertTrue(ship.getCrewHolder().isCrewMember(member));
+        ship.getCrewHolder().overBoard(member);
+        assertFalse(ship.getCrewHolder().isCrewMember(member));
+        ship.getCrewHolder().addCrewMember(member);
+        ship.getCrewHolder().setCrew(CREW);
+        ship.getCrewHolder().overBoardAll();
+        assertTrue(ship.getCrewHolder().isCrewEmpty());
+        final Exception exception = assertThrows(IllegalStateException.class, () -> ship.getCrewHolder().checkCrew());
         assertEquals("not enough crew members!", exception.getMessage());
     }
 
     @Test
     void testTakeOff() {
-        assertEquals(SpaceShip.Condition.ON_LAND, ship.getCondition());
-        ship.setCrew(crew);
+        assertEquals(Condition.ON_LAND, ship.getController().getCondition());
+        ship.getCrewHolder().setCrew(CREW);
         assertEquals(ship.getName() + " взлетел", ship.takeOff());
-        assertEquals(SpaceShip.Condition.IN_SPACE, ship.getCondition());
+        assertEquals(Condition.IN_SPACE, ship.getController().getCondition());
     }
 
     static Stream<CrewMember> provideAllCrewMembers() {
@@ -118,7 +117,7 @@ public class DomainModelTest {
         return Stream.of(
                 Arguments.of(EngineType.ELECTRIC, 6300),
                 Arguments.of(EngineType.PHOTONIC, 4200),
-                Arguments.of(EngineType.CHEMICAL, 10500),
+                Arguments.of(EngineType.CHEMICAL, 10_500),
                 Arguments.of(EngineType.NUCLEAR, 8800)
         );
     }

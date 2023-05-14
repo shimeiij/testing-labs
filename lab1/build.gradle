@@ -27,7 +27,7 @@ test {
 pmd {
     consoleOutput = true
     toolVersion = "6.54.0"
-    ruleSetFiles = files("./pmd.xml") // Исключения только через внешний файл
+    ruleSetFiles = files("config/pmd.xml")
     ruleSets = []
 }
 

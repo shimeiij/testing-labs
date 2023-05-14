@@ -1,7 +1,7 @@
 package org.testing.domain;
 
 public abstract class AbstactSpaceShip implements Entity{
-    static int MAX_FUEL = Integer.MAX_VALUE;
+    static final int MAXFUEL = Integer.MAX_VALUE;
 
     abstract String drift();
     abstract String takeOff();

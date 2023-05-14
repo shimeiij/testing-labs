@@ -19,7 +19,10 @@ public class CrewMember extends Person{
         ASTRONAUT
     }
 
-    public CrewMember(String name, int age, Reason reason, StatusType type) {
+    public CrewMember(final String name,
+                      final int age,
+                      final Reason reason,
+                      final StatusType type) {
         super(name, age);
         this.reason  = reason;
         this.status = type;
@@ -29,7 +32,7 @@ public class CrewMember extends Person{
         return status.name();
     }
 
-    public void setStatus(StatusType status) {
+    public void setStatus(final StatusType status) {
         this.status = status;
     }
 
@@ -37,7 +40,7 @@ public class CrewMember extends Person{
         return reason;
     }
 
-    public void setReason(Reason reason) {
+    public void setReason(final Reason reason) {
         this.reason = reason;
     }
 

@@ -1,3 +1,5 @@
+package alg;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
@@ -6,10 +8,10 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("test hash")
+@DisplayName("testHash")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AlgTest {
-    static String[] keys = {
+class AlgTest {
+     static final String[] KEYS = {
             "games", "blogs", "cartoons", "music", "books", "health", "dining",
             "sunday", "store", "classified", "mobile", "update", "services"
     };
@@ -25,21 +27,21 @@ public class AlgTest {
 
     @ParameterizedTest
     @EnumSource(ClosedHashingProb.Probe.class)
-    void testElement(ClosedHashingProb.Probe probe) {
+    void testElement(final ClosedHashingProb.Probe probe) {
         assertNotNull(probe);
         set.setProb(probe);
-        String last_str = null;
-        for (String str: keys) {
+        String lastStr = null;
+        for (final String str: KEYS) {
             assertTrue(set.insert(str));
             assertTrue(set.contains(str));
-            last_str = str;
+            lastStr = str;
         }
-        assertTrue(set.remove(last_str));
-        assertFalse(set.remove(last_str));
-        assertFalse(set.contains(last_str));
+        assertTrue(set.remove(lastStr));
+        assertFalse(set.remove(lastStr));
+        assertFalse(set.contains(lastStr));
 
-        String finalLast_str = last_str;
-        assertEquals("no such el :c", assertThrows(NoSuchElementException.class, () -> set.find(finalLast_str)).getMessage());
+        final String finalLastStr = lastStr;
+        assertEquals("no such el :c", assertThrows(NoSuchElementException.class, () -> set.find(finalLastStr)).getMessage());
         assertEquals("no such el :c", assertThrows(NoSuchElementException.class, () -> set.find("foo")).getMessage());
     }
 
@@ -49,11 +51,11 @@ public class AlgTest {
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class TestLinearProbe {
-        ClosedHashingProb<String> set = new ClosedHashingProb<>(keys.length, ClosedHashingProb.Probe.LINEAR);
+        ClosedHashingProb<String> set = new ClosedHashingProb<>(KEYS.length, ClosedHashingProb.Probe.LINEAR);
 
         @BeforeAll
         void fillSet() {
-            for (String str: keys) {
+            for (final String str: KEYS) {
                 set.insert(str);
             }
         }
@@ -63,14 +65,14 @@ public class AlgTest {
                 "games, 12", "blogs, 0", "cartoons, 9", "music, 7", "books, 4", "health, 1", "dining, 5",
                 "sunday, 11", "store, 6", "classified, 10", "mobile, 2", "update, 8", "services, 3"
         })
-        void testFind(String str, int ind) {
+        void testFind(final String str, final int ind) {
             assertTrue(set.contains(str));
             assertEquals(ind, set.find(str));
         }
 
         @Test
         void testLinearOverflow() {
-            Exception exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> set.insert("aaa"));
+            final Exception exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> set.insert("aaa"));
             assertEquals("all array is full", exception.getMessage());
         }
 
@@ -79,11 +81,11 @@ public class AlgTest {
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class TestDoubleProbe {
-        ClosedHashingProb<String> set = new ClosedHashingProb<>(keys.length, ClosedHashingProb.Probe.DOUBLE);
+        ClosedHashingProb<String> set = new ClosedHashingProb<>(KEYS.length, ClosedHashingProb.Probe.DOUBLE);
 
         @BeforeAll
         void fillSet() {
-            for (String str: keys) {
+            for (final String str: KEYS) {
                 set.insert(str);
             }
         }
@@ -93,14 +95,14 @@ public class AlgTest {
                 "games, 12", "blogs, 9", "cartoons, 3", "music, 7", "books, 4", "health, 0", "dining, 2",
                 "sunday, 11", "store, 10", "classified, 5", "mobile, 1", "update, 8", "services, 6"
         })
-        void testFind(String str, int ind) {
+        void testFind(final String str, final int ind) {
             assertTrue(set.contains(str));
             assertEquals(ind, set.find(str));
         }
 
         @Test
         void testDoubleOverflow() {
-            Exception exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> set.insert("aaa"));
+            final Exception exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> set.insert("aaa"));
             assertEquals("all array is full", exception.getMessage());
         }
 
@@ -115,7 +117,7 @@ public class AlgTest {
 
         @BeforeAll
         void fillSet() {
-            for (String str: keys) {
+            for (final String str: KEYS) {
                 set.insert(str);
             }
         }
@@ -126,7 +128,7 @@ public class AlgTest {
                 "games, 22", "blogs, 23", "cartoons, 6", "music, 7", "books, 26", "health, 24", "dining, 25",
                 "sunday, 8", "store, 9", "classified, 28", "mobile, 27", "update, 0", "services, 29"
         })
-        void testFind(String arg, int i) {
+        void testFind(final String arg, final int i) {
             assertTrue(set.contains(arg));
             assertEquals(i, set.find(arg));
         }
@@ -141,8 +143,8 @@ public class AlgTest {
 
         @ParameterizedTest
         @EnumSource(ClosedHashingProb.Probe.class)
-        void testSameKeys(ClosedHashingProb.Probe probe) {
-            String str = "a";
+        void testSameKeys(final ClosedHashingProb.Probe probe) {
+            final String str = "a";
             set.setProb(probe);
             assertTrue(set.insert(str));
             assertFalse(set.insert(str));
