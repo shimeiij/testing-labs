@@ -28,22 +28,6 @@ public class CrewMember extends Person{
         this.status = type;
     }
 
-    public String getStatus() {
-        return status.name();
-    }
-
-    public void setStatus(final StatusType status) {
-        this.status = status;
-    }
-
-    public Reason getReason() {
-        return reason;
-    }
-
-    public void setReason(final Reason reason) {
-        this.reason = reason;
-    }
-
     @Override
     public String toString() {
         return "CrewMember{" +

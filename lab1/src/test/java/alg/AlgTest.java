@@ -18,12 +18,6 @@ class AlgTest {
 
     ClosedHashingProb<String> set = new ClosedHashingProb<>(30);
 
-//    @BeforeEach
-//    void fillSet() {
-//        for (String str: keys) {
-//            assertTrue(set.insert(str));
-//        }
-//    }
 
     @ParameterizedTest
     @EnumSource(ClosedHashingProb.Probe.class)
@@ -45,7 +39,11 @@ class AlgTest {
         assertEquals("no such el :c", assertThrows(NoSuchElementException.class, () -> set.find("foo")).getMessage());
     }
 
-
+    @Test
+    void testIncorrectProbe() {
+        set.setProb(null);
+        assertEquals(-1, set.probe("foo"));
+    }
 
 
     @Nested
@@ -68,6 +66,18 @@ class AlgTest {
         void testFind(final String str, final int ind) {
             assertTrue(set.contains(str));
             assertEquals(ind, set.find(str));
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+                "games", "blogs", "cartoons", "music", "books", "health", "dining",
+                "sunday", "store", "classified", "mobile", "update", "services"
+        })
+        void testRemove(final String str) {
+            assertTrue(set.remove(str));
+            assertFalse(set.remove(str));
+            assertFalse(set.contains(str));
+            assertEquals("no such el :c", assertThrows(NoSuchElementException.class, () -> set.find(str)).getMessage());
         }
 
         @Test

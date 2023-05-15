@@ -8,13 +8,6 @@ public class SpaceShip extends AbstactSpaceShip{
     ShipController controller;
 
 
-    public SpaceShip(final String name, final EngineType type) {
-        super();
-        this.name = name;
-        controller = new ShipController(type);
-        crewHolder = new CrewHolder();
-    }
-
     public SpaceShip(final String name) {
         super();
         this.name = name;
@@ -54,19 +47,22 @@ public class SpaceShip extends AbstactSpaceShip{
     @Override
     public String landOn() {
         controller.setCondition(Condition.ON_LAND);
-        return controller.checkFuelForLanding();
+        return name + controller.checkFuelForLanding();
     }
 
     @Override
     public String fly() {
-        String msg = " может только дрейофвать";
+        String msg = null;
         final Condition cond = controller.breakDownInFly();
         if (cond == Condition.CRUSHED) {
             crewHolder.overBoardAll();
             msg = " потерпевает крушение";
         }
         if (cond == Condition.IN_SPACE) {
-            msg = " летит в космосе ";
+            msg = " летит в космосе";
+        }
+        if (cond == Condition.DRIFT) {
+            msg = " может только дрейфовать!";
         }
         return name + msg;
     }
@@ -76,12 +72,6 @@ public class SpaceShip extends AbstactSpaceShip{
     public String getName() {
         return this.name;
     }
-
-    @Override
-    public void setName(final String name) {
-        this.name = name;
-    }
-
 
     public CrewHolder getCrewHolder() {
         return crewHolder;

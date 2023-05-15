@@ -19,16 +19,4 @@ public class Engine implements Entity{
         return this.name;
     }
 
-    @Override
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public boolean isRefueled() {
-        return isRefueled;
-    }
-
-    public long getFuel() {
-        return fuel;
-    }
 }

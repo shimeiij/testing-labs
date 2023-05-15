@@ -49,10 +49,6 @@ public class CrewHolder {
         crew.clear();
     }
 
-    public List<CrewMember> getCrew() {
-        return crew;
-    }
-
     public boolean isCrewEmpty() {
         return crew.isEmpty();
     }

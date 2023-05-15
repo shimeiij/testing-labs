@@ -19,14 +19,4 @@ public enum EngineType {
         return charge;
     }
 
-    public EngineType getEngineTypeByValue(final int val) {
-        for (final EngineType type: values()) {
-            if (type.getCharge() == val) {
-                return type;
-            }
-        }
-        return null;
-    }
-
-
 }

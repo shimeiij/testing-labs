@@ -29,22 +29,24 @@ public class ShipController {
                 this.condition = Condition.CRUSHED;
                 return condition;
             }
+            condition = Condition.DRIFT;
             engine.fuel -= type.getCharge();
             return condition;
+        } else {
+            condition = Condition.IN_SPACE;
+            engine.fuel -= (long) type.getCharge() * K;
         }
-        condition = Condition.IN_SPACE;
-        engine.fuel -= (long) type.getCharge() * K;
         return condition;
     }
 
     public void spendFuel() {
         final EngineType type = EngineType.valueOf(engine.getName());
-        engine.fuel -= type.getCharge();
+        engine.fuel -= (long) type.getCharge() * K;
     }
 
     public String checkFuelForLanding() {
         final EngineType type = EngineType.valueOf(engine.getName());
-        if (engine.fuel < (long) type.getCharge() * K) {
+        if (engine.fuel < (long) type.getCharge() * K ) {
             return " недостаточно топлива для приземления!";
         } else {
             engine.fuel -= (long) type.getCharge() * K;

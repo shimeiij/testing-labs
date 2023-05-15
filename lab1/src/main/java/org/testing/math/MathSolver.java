@@ -1,4 +1,4 @@
-package org.testing;
+package org.testing.math;
 
 import java.util.stream.LongStream;
 public class MathSolver {
