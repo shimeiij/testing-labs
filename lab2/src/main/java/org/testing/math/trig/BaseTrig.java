@@ -2,7 +2,7 @@ package org.testing.math.trig;
 
 import java.util.stream.LongStream;
 
-public class BaseTrigonometric {
+public class BaseTrig {
 
     private Long fact(final Long n) {
         return LongStream.rangeClosed(1, n)

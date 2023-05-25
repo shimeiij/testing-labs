@@ -1,9 +1,8 @@
 package org.testing.math.trig;
 
-public class CosSecFunc extends TrigonometryFunc{
-    BaseTrigonometric cos;
+public class CosSecFunc extends AbsTrigFunc {
 
-    CosSecFunc(final BaseTrigonometric cos) {
+    CosSecFunc(final BaseTrig cos) {
         setBaseTrigFunc(cos);
     }
 
@@ -16,12 +15,7 @@ public class CosSecFunc extends TrigonometryFunc{
     }
 
     @Override
-    public void setBaseTrigFunc(BaseTrigonometric cos) {
+    public void setBaseTrigFunc(BaseTrig cos) {
         this.cos = cos;
-    }
-
-    @Override
-    public BaseTrigonometric getBaseTrigonometricFunc() {
-        return cos;
     }
 }

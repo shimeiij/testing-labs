@@ -1,10 +1,9 @@
 package org.testing.math.trig;
 
-public class TanFunc extends TrigonometryFunc{
-    BaseTrigonometric cos;
+public class TanFunc extends AbsTrigFunc {
     SinFunc sin;
 
-    TanFunc(BaseTrigonometric cos, SinFunc sin) {
+    TanFunc(BaseTrig cos, SinFunc sin) {
         setBaseTrigFunc(cos);
         this.sin = sin;
     }
@@ -15,12 +14,8 @@ public class TanFunc extends TrigonometryFunc{
     }
 
     @Override
-    public void setBaseTrigFunc(BaseTrigonometric cos) {
+    public void setBaseTrigFunc(BaseTrig cos) {
         this.cos = cos;
     }
 
-    @Override
-    public BaseTrigonometric getBaseTrigonometricFunc() {
-        return cos;
-    }
 }

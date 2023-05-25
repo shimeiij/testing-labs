@@ -1,14 +1,13 @@
 package org.testing.math.trig;
 
-public class SinFunc extends TrigonometryFunc{
-    BaseTrigonometric cos;
+public class SinFunc extends AbsTrigFunc {
 
-    SinFunc(BaseTrigonometric cos) {
+    SinFunc(BaseTrig cos) {
         super();
         setBaseTrigFunc(cos);
     }
 
-    SinFunc() {};
+    SinFunc() {}
 
     @Override
     public Double solveFunc(Long x, Long acc) {
@@ -17,12 +16,7 @@ public class SinFunc extends TrigonometryFunc{
     }
 
     @Override
-    public void setBaseTrigFunc(BaseTrigonometric cos) {
+    public void setBaseTrigFunc(BaseTrig cos) {
         this.cos = cos;
-    }
-
-    @Override
-    public BaseTrigonometric getBaseTrigonometricFunc() {
-        return cos;
     }
 }
