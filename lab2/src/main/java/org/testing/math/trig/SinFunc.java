@@ -1,22 +1,22 @@
 package org.testing.math.trig;
 
+import java.io.IOException;
+
 public class SinFunc extends AbsTrigFunc {
 
-    SinFunc(BaseTrig cos) {
-        super();
+    public SinFunc(CosFunc cos) {
         setBaseTrigFunc(cos);
     }
 
-    SinFunc() {}
-
     @Override
-    public Double solveFunc(Long x, Long acc) {
-        double sq_sin = 1 - Math.pow(cos.cos(x, acc), 2);
-        return Math.sqrt(sq_sin);
+    public Double solveFunc(double x, double acc)  {
+        double res = cos.cos(Math.PI/2 - x, acc);
+        writeToCsv(buildCSVRes(x, res, null), FILENAME);
+        return res;
     }
 
     @Override
-    public void setBaseTrigFunc(BaseTrig cos) {
+    public void setBaseTrigFunc(CosFunc cos) {
         this.cos = cos;
     }
 }

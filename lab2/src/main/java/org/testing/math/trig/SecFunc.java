@@ -2,19 +2,17 @@ package org.testing.math.trig;
 
 public class SecFunc extends AbsTrigFunc {
 
-    SecFunc(final BaseTrig cos) {
+    public SecFunc(final CosFunc cos) {
         setBaseTrigFunc(cos);
     }
 
-    SecFunc() {}
-
     @Override
-    public Double solveFunc(Long x, Long acc) {
+    public Double solveFunc(double x, double acc) {
         return 1/cos.cos(x, acc);
     }
 
     @Override
-    public void setBaseTrigFunc(BaseTrig cos) {
+    public void setBaseTrigFunc(CosFunc cos) {
         this.cos = cos;
     }
 }
