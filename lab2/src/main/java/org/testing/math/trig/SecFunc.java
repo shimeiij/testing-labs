@@ -7,8 +7,8 @@ public class SecFunc extends AbsTrigFunc {
     }
 
     @Override
-    public Double solveFunc(double x, double acc) {
-        return 1/cos.cos(x, acc);
+    public Double solveFunc(double x, double eps) {
+        return 1/cos.cos(x, eps);
     }
 
     @Override

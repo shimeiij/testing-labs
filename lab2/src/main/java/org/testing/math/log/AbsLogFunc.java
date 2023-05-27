@@ -1,9 +1,11 @@
 package org.testing.math.log;
 
-public abstract class AbsLogFunc {
-    BaseLog ln;
+import org.testing.math.CSVInterface;
 
-    public abstract Double solveLog(double x, Long base, Long acc);
-    public abstract void setLn(BaseLog ln);
+public abstract class AbsLogFunc implements CSVInterface {
+    LogBaseN ln;
+
+    public abstract Double solveLog(double x, long base, double eps);
+    public abstract void setLn(LogBaseN ln);
 
 }

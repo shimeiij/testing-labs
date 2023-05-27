@@ -9,8 +9,8 @@ public class TanFunc extends AbsTrigFunc {
     }
 
     @Override
-    public Double solveFunc(double x, double acc) {
-        return sin.solveFunc(x, acc)/cos.cos(x, acc);
+    public Double solveFunc(double x, double eps) {
+        return sin.solveFunc(x, eps)/cos.cos(x, eps);
     }
 
     @Override

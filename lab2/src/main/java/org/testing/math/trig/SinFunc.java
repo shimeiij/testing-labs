@@ -1,6 +1,5 @@
 package org.testing.math.trig;
 
-import java.io.IOException;
 
 public class SinFunc extends AbsTrigFunc {
 
@@ -9,8 +8,8 @@ public class SinFunc extends AbsTrigFunc {
     }
 
     @Override
-    public Double solveFunc(double x, double acc)  {
-        double res = cos.cos(Math.PI/2 - x, acc);
+    public Double solveFunc(double x, double eps)  {
+        double res = cos.cos(Math.PI/2 - x, eps);
         writeToCsv(buildCSVRes(x, res, null), FILENAME);
         return res;
     }

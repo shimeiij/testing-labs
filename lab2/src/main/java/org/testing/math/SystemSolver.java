@@ -1,21 +1,17 @@
 package org.testing.math;
 
-import org.testing.math.trig.CosFunc;
-import org.testing.math.trig.CosSecFunc;
-import org.testing.math.trig.SinFunc;
-import org.testing.math.trig.TanFunc;
+import org.testing.math.log.LogBase;
+import org.testing.math.log.LogBaseN;
 
 public class SystemSolver {
 
     public static void main(String[] args) {
-        CosFunc cos = new CosFunc();
-        SinFunc sin = new SinFunc(cos);
-        TanFunc tan = new TanFunc(cos, sin);
-        CosSecFunc cosSec = new CosSecFunc(cos);
-        System.out.println(sin.solveFunc(Math.PI, 0.000001));
-        System.out.println(sin.solveFunc(Math.PI, 0.000001));
-
-//        System.out.println(cos.cos(Math.PI/2, 0.00001));
+        double eps = 1e-10;
+        LogBaseN ln = new LogBaseN();
+        LogBase log = new LogBase(ln);
+        double x = 8;
+        System.out.println(ln.ln(x, eps));
+        System.out.println(log.solveLog(x, 2, 1e3));
     }
 
 }
