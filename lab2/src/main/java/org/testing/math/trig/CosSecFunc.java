@@ -8,7 +8,9 @@ public class CosSecFunc extends AbsTrigFunc {
 
     @Override
     public Double solveFunc(double x, double eps) {
-        return 1/cos.cos(Math.PI/2 - x, eps);
+        double res = 1/cos.cos(Math.PI/2 - x, eps);
+        writeToCsv(buildCSVRes(x, res, null), FILENAME);
+        return res;
     }
 
     @Override

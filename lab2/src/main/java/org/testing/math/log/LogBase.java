@@ -7,11 +7,13 @@ public class LogBase extends AbsLogFunc {
     }
 
     @Override
-    public Double solveLog(double x, long base, double eps) {
+    public Double solveLog(double x, double base, double eps) {
         if (base == 1 || base <= 0) {
             throw new ArithmeticException("invalid base");
         }
-        return ln.ln(x, eps)/ln.ln(base, eps);
+        double res = ln.ln(x, eps)/ln.ln(base, eps);
+        writeToCsv(buildCSVRes(x, res, base), FILENAME);
+        return res;
     }
 
     @Override

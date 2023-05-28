@@ -16,6 +16,7 @@ public class CosFunc implements CSVInterface {
         }
         double res = Math.ceil(sum/eps)*eps;
         if (res == 0.0) return res;
+        writeToCsv(buildCSVRes(x, sum, null), FILENAME);
         return sum;
     }
 

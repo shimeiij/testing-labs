@@ -1,6 +1,8 @@
 package org.testing.math.log;
 
-public class LogBaseN {
+import org.testing.math.CSVInterface;
+
+public class LogBaseN implements CSVInterface {
 
     public Double ln(double x, double eps) {
         if (x <= 0) {
@@ -13,7 +15,6 @@ public class LogBaseN {
             x /= Math.E;
             k++;
         }
-
         double n = x - 1, sum = n;
         int i = 1;
         while (Math.abs(n) > eps)
@@ -22,6 +23,8 @@ public class LogBaseN {
             n *= -((x-1)*(i-1))/i;
             sum += n;
         }
-        return k + sum;
+        double res = k + sum;
+        writeToCsv(buildCSVRes(x, res, Math.E), FILENAME);
+        return res;
     }
 }
