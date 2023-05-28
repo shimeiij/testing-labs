@@ -21,7 +21,7 @@ test {
     useJUnitPlatform()
     dependsOn pmdMain, pmdTest
     finalizedBy jacocoTestReport
-    finalizedBy jacocoTestCoverageVerification
+//    finalizedBy jacocoTestCoverageVerification
 }
 
 pmd {

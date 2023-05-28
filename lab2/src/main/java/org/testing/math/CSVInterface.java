@@ -1,31 +1,30 @@
 package org.testing.math;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public interface CSVInterface {
     String FILENAME = "res.csv";
 
-    default void writeToCsv(String str, String file) {
-        BufferedWriter writer = null;
-        try {
-            writer = new BufferedWriter(new FileWriter(file, true));
+    default void writeToCsv(final String str, final String file) {
+        try (BufferedWriter writer = new BufferedWriter(Files.newBufferedWriter(Paths.get(file)))) {
             writer.append(str);
-            writer.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-    };
-
-    default String buildCSVRes(double x, double res, Double base) {
-        StringBuilder stringBuilder = new StringBuilder(getClass().getSimpleName());
-        if (base != null) stringBuilder.append(base);
-        stringBuilder.append("("); // no comments
-        stringBuilder.append(x);
-        stringBuilder.append("),");
-        stringBuilder.append(res);
-        stringBuilder.append("\n");
+    }
+        default String buildCSVRes(final double x,
+                               final double res,
+                               final Double base) {
+        final StringBuilder stringBuilder = new StringBuilder(getClass().getSimpleName());
+        if (base != null){
+            stringBuilder.append(base);
+        }
+        stringBuilder.append('(').append(x).append("),")
+                .append(res)
+                .append('\n');
         return stringBuilder.toString();
     }
 }

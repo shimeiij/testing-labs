@@ -4,23 +4,27 @@ import org.testing.math.CSVInterface;
 
 public class LogBaseN implements CSVInterface {
 
-    public Double ln(double x, double eps) {
+    public Double ln(final double x, final double eps) {
         if (x <= 0) {
             throw new ArithmeticException("argument must be > 0");
         }
-        if (x == 1.0) return 0.0;
+        if (x == 1.0) {
+            return 0.0;
+        }
         int k = 0;
-        while (x > Math.E)
+        double y = x;
+        while (y > Math.E)
         {
-            x /= Math.E;
+            y /= Math.E;
             k++;
         }
-        double n = x - 1, sum = n;
+        double n = y - 1,
+                sum = n;
         int i = 1;
         while (Math.abs(n) > eps)
         {
             i++;
-            n *= -((x-1)*(i-1))/i;
+            n *= -((y-1)*(i-1))/i;
             sum += n;
         }
         double res = k + sum;

@@ -2,22 +2,25 @@ package org.testing.math.log;
 
 public class LogBase extends AbsLogFunc {
 
-    public LogBase(LogBaseN ln) {
-        setLn(ln);
+    public LogBase(final LogBaseN ln) {
+        super();
+        this.ln = ln;
     }
 
     @Override
-    public Double solveLog(double x, double base, double eps) {
+    public Double solveLog(final double x,
+                           final double base,
+                           final double eps) {
         if (base == 1 || base <= 0) {
             throw new ArithmeticException("invalid base");
         }
-        double res = ln.ln(x, eps)/ln.ln(base, eps);
+        final double res = ln.ln(x, eps)/ln.ln(base, eps);
         writeToCsv(buildCSVRes(x, res, base), FILENAME);
         return res;
     }
 
     @Override
-    public void setLn(LogBaseN ln) {
+    public void setLn(final LogBaseN ln) {
         this.ln = ln;
     }
 

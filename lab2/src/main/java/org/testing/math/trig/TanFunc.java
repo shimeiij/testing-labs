@@ -3,20 +3,21 @@ package org.testing.math.trig;
 public class TanFunc extends AbsTrigFunc {
     SinFunc sin;
 
-    public TanFunc(CosFunc cos, SinFunc sin) {
-        setBaseTrigFunc(cos);
+    public TanFunc(final CosFunc cos, final SinFunc sin) {
+        super();
+        this.cos = cos;
         this.sin = sin;
     }
 
     @Override
-    public Double solveFunc(double x, double eps) {
-        double res = sin.solveFunc(x, eps)/cos.cos(x, eps);
+    public Double solveFunc(final double x,final double eps) {
+        final double res = sin.solveFunc(x, eps)/cos.cos(x, eps);
         writeToCsv(buildCSVRes(x, res, null), FILENAME);
         return res;
     }
 
     @Override
-    public void setBaseTrigFunc(CosFunc cos) {
+    public void setBaseTrigFunc(final CosFunc cos) {
         this.cos = cos;
     }
 

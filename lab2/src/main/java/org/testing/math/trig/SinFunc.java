@@ -3,19 +3,20 @@ package org.testing.math.trig;
 
 public class SinFunc extends AbsTrigFunc {
 
-    public SinFunc(CosFunc cos) {
-        setBaseTrigFunc(cos);
+    public SinFunc(final CosFunc cos) {
+        super();
+        this.cos = cos;
     }
 
     @Override
-    public Double solveFunc(double x, double eps)  {
-        double res = cos.cos(Math.PI/2 - x, eps);
+    public Double solveFunc(final double x, final double eps)  {
+        final double res = cos.cos(Math.PI/2 - x, eps);
         writeToCsv(buildCSVRes(x, res, null), FILENAME);
         return res;
     }
 
     @Override
-    public void setBaseTrigFunc(CosFunc cos) {
+    public void setBaseTrigFunc(final CosFunc cos) {
         this.cos = cos;
     }
 }
