@@ -1,44 +1,54 @@
 package org.testing.math;
 
+import org.testing.math.log.AbsLogFunc;
 import org.testing.math.log.LogBase;
 import org.testing.math.log.LogBaseN;
 import org.testing.math.trig.*;
 
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class SystemSolver {
     LogBaseN ln;
     CosFunc cos;
-    SinFunc sinFunc;
-    CotFunc cotFunc;
-    SecFunc secFunc;
-    LogBase logBase;
+    AbsTrigFunc sinFunc;
+    AbsTrigFunc cotFunc;
+    AbsTrigFunc secFunc;
+    AbsLogFunc logBase;
 
 
     public SystemSolver(final LogBaseN ln,
-                        final CosFunc cos)
-    {
+                        final CosFunc cos)  {
+        super();
         this.ln = ln;
         this.cos = cos;
-        sinFunc = new SinFunc(cos);
-        cotFunc = new CotFunc(sinFunc, cos);
-        secFunc = new SecFunc(cos);
-        logBase = new LogBase(ln);
     }
 
-    public Double solveSystem(final double x,final double eps)
+    private void printRes(CSVInterface csvObj) {
+        csvObj.writeToCsv();
+    }
+
+    public Double solveSystem(final double x,
+                              final double eps)
     {
         if (x <= 0) {
-            if (x == Double.NEGATIVE_INFINITY){
-                return Double.NaN;
-            }
+            sinFunc = new SinFunc(cos);
+            cotFunc = new CotFunc(sinFunc, cos);
+            secFunc = new SecFunc(cos);
+
             final double cotRes = cotFunc.solveFunc(x, eps);
             if (cotRes == Double.POSITIVE_INFINITY || cotRes == Double.NEGATIVE_INFINITY) {
+                printRes(cotFunc);
                 return cotRes;
             }
             final double cosRes = cos.cos(x, eps),
                     sinRes = sinFunc.solveFunc(x, eps),
                     secRes = secFunc.solveFunc(x, eps);
+            printRes(cotFunc);
             return Math.pow(cosRes*sinRes*cotRes, 2)*cotRes - secRes/cotRes;
         } else {
+            logBase = new LogBase(ln);
             if (x == Double.MAX_VALUE || x == Double.POSITIVE_INFINITY){
                 return 0.0;
             }
@@ -49,6 +59,7 @@ public class SystemSolver {
                     loge = ln.ln(x, eps);
             final double num = ((1.0-log2)*(loge-log3))*log5;
             final double den = Math.pow(log3, 2)*lg*log3;
+            printRes(logBase);
             if (num == 0.0 && den == 0.0){
                 return Double.POSITIVE_INFINITY;
             }
@@ -73,5 +84,7 @@ public class SystemSolver {
     public void setLogBase(final LogBase logBase) {
         this.logBase = logBase;
     }
+
+
 
 }

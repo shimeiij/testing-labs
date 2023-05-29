@@ -1,9 +1,9 @@
 package org.testing.math.trig;
 
 public class CotFunc extends AbsTrigFunc{
-    SinFunc sinFunc;
+    AbsTrigFunc sinFunc;
 
-    public CotFunc(final SinFunc sinFunc,final CosFunc cos)
+    public CotFunc(final AbsTrigFunc sinFunc,final CosFunc cos)
     {
         super();
         this.cos = cos;
@@ -13,7 +13,7 @@ public class CotFunc extends AbsTrigFunc{
     @Override
     public Double solveFunc(final double x,final double eps) {
         final double res = cos.cos(x, eps)/sinFunc.solveFunc(x, eps);
-        writeToCsv(buildCSVRes(x, res, null), FILENAME);
+        this.msg.add(buildCSVRes(x, res));
         return res;
     }
 

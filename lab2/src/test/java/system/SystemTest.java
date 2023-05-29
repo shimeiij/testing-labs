@@ -12,11 +12,12 @@ import org.testing.math.trig.CotFunc;
 import org.testing.math.trig.SecFunc;
 import org.testing.math.trig.SinFunc;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SystemTest {
     double eps = 1e-10;
-    double delta = 1e-5;
+    double delta = 1e-7;
     LogBaseN ln = new LogBaseN();
     CosFunc cos = new CosFunc();
     SystemSolver solver = new SystemSolver(ln, cos);
@@ -62,7 +63,7 @@ class SystemTest {
         Mockito.when(logBase.solveLog(breakPoint4, 5, eps)).thenReturn(0.0);
         Mockito.when(logBase.solveLog(breakPoint4, 10, eps)).thenReturn(0.0);
 
-        assertEquals(Double.POSITIVE_INFINITY, solver.solveSystem(breakPoint4, eps), delta);
+        assertEquals(Double.POSITIVE_INFINITY, solver.solveSystem(breakPoint4, 1e-8), delta);
     }
 
     @ParameterizedTest

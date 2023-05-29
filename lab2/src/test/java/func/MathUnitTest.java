@@ -1,8 +1,6 @@
 package func;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.testing.math.log.LogBase;
@@ -26,11 +24,11 @@ class MathUnitTest {
         LogBaseN ln = new LogBaseN();
         LogBase log = new LogBase(ln);
 
-
         @ParameterizedTest
         @ValueSource(doubles = {1.0, 0.5, 0.01, 3.0, Math.E, 1e10})
         void testLn(final double x) {
-            assertEquals(Math.log(x), ln.ln(x, eps), testDelta);
+            double res = ln.ln(x, eps);
+            assertEquals(Math.log(x), res, testDelta);
         }
 
         @ParameterizedTest

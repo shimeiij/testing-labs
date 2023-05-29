@@ -2,7 +2,7 @@ package org.testing.math.trig;
 
 import org.testing.math.CSVInterface;
 
-public class CosFunc implements CSVInterface {
+public class CosFunc  implements CSVInterface {
 
     public double cos(final double x,final double eps) {
         double n = 1.0;
@@ -16,9 +16,10 @@ public class CosFunc implements CSVInterface {
         }
         final double res = Math.ceil(sum/eps)*eps;
         if (res == 0.0){
+            this.msg.add(buildCSVRes(x, res));
             return res;
         }
-        writeToCsv(buildCSVRes(x, sum, null), FILENAME);
+        this.msg.add(buildCSVRes(x, sum));
         return sum;
     }
 

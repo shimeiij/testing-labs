@@ -7,6 +7,7 @@ public class LogBase extends AbsLogFunc {
         this.ln = ln;
     }
 
+
     @Override
     public Double solveLog(final double x,
                            final double base,
@@ -15,7 +16,7 @@ public class LogBase extends AbsLogFunc {
             throw new ArithmeticException("invalid base");
         }
         final double res = ln.ln(x, eps)/ln.ln(base, eps);
-        writeToCsv(buildCSVRes(x, res, base), FILENAME);
+        this.msg.add(buildCSVRes(x, res));
         return res;
     }
 

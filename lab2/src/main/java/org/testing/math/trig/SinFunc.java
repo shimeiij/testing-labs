@@ -11,7 +11,7 @@ public class SinFunc extends AbsTrigFunc {
     @Override
     public Double solveFunc(final double x, final double eps)  {
         final double res = cos.cos(Math.PI/2 - x, eps);
-        writeToCsv(buildCSVRes(x, res, null), FILENAME);
+        this.msg.add(buildCSVRes(x, res));
         return res;
     }
 

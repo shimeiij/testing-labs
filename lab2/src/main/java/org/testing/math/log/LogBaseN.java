@@ -2,7 +2,9 @@ package org.testing.math.log;
 
 import org.testing.math.CSVInterface;
 
-public class LogBaseN implements CSVInterface {
+import java.util.List;
+
+public class LogBaseN  implements CSVInterface {
 
     public Double ln(final double x, final double eps) {
         if (x <= 0) {
@@ -31,7 +33,7 @@ public class LogBaseN implements CSVInterface {
             sum += n;
         }
         final double res = k + sum;
-        writeToCsv(buildCSVRes(x, res, Math.E), FILENAME);
+        this.msg.add(buildCSVRes(x, res));
         return res;
     }
 }
