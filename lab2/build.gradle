@@ -20,9 +20,9 @@ dependencies {
 
 test {
     useJUnitPlatform()
-//    dependsOn pmdMain, pmdTest
-//    finalizedBy jacocoTestReport
-//    finalizedBy jacocoTestCoverageVerification
+    dependsOn pmdMain, pmdTest
+    finalizedBy jacocoTestReport
+    finalizedBy jacocoTestCoverageVerification
 }
 
 pmd {

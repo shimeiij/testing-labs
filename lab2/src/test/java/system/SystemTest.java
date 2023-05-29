@@ -1,4 +1,8 @@
+package system;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.testing.math.SystemSolver;
 import org.testing.math.log.LogBase;
@@ -12,29 +16,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SystemTest {
     double eps = 1e-10;
-    SystemSolver solver;
+    double delta = 1e-5;
     LogBaseN ln = new LogBaseN();
     CosFunc cos = new CosFunc();
+    SystemSolver solver = new SystemSolver(ln, cos);
+
 
 
     @Test
     void testSystem()
     {
-        LogBase logBase = Mockito.mock(LogBase.class);
-        CotFunc cotFunc = Mockito.mock(CotFunc.class);
-        SecFunc secFunc = Mockito.mock(SecFunc.class);
-        SinFunc sinFunc = Mockito.mock(SinFunc.class);
+        final LogBase logBase = Mockito.mock(LogBase.class);
+        final CotFunc cotFunc = Mockito.mock(CotFunc.class);
+        final SecFunc secFunc = Mockito.mock(SecFunc.class);
+        final SinFunc sinFunc = Mockito.mock(SinFunc.class);
 
-        solver = new SystemSolver(ln, cos);
         solver.setLogBase(logBase);
         solver.setCotFunc(cotFunc);
         solver.setSecFunc(secFunc);
         solver.setSinFunc(sinFunc);
 
 
-        double breakPoint1 = -Math.PI;
-        double breakPoint2 = -Math.PI/2;
-        double breakPoint3 = 0.0;
+        final double breakPoint1 = -Math.PI,
+                breakPoint2 = -Math.PI/2,
+                breakPoint3 = 0.0;
         Mockito.when(secFunc.solveFunc(breakPoint1, eps)).thenReturn(-1.0);
         Mockito.when(secFunc.solveFunc(breakPoint2, eps)).thenReturn(Double.NEGATIVE_INFINITY);
         Mockito.when(secFunc.solveFunc(breakPoint3, eps)).thenReturn(1.0);
@@ -47,14 +52,22 @@ class SystemTest {
         Mockito.when(cotFunc.solveFunc(breakPoint2, eps)).thenReturn(0.0);
         Mockito.when(cotFunc.solveFunc(breakPoint3, eps)).thenReturn(Double.NEGATIVE_INFINITY);
 
-        assertEquals(Double.POSITIVE_INFINITY, solver.solveSystem(breakPoint1, eps));
+        assertEquals(Double.POSITIVE_INFINITY, solver.solveSystem(breakPoint1, eps), delta);
+        assertEquals(Double.POSITIVE_INFINITY, solver.solveSystem(breakPoint2, eps), delta);
+        assertEquals(Double.NEGATIVE_INFINITY, solver.solveSystem(breakPoint3, eps), delta);
 
-        double breakPoint4 = 1.0;
+        final double breakPoint4 = 1.0;
         Mockito.when(logBase.solveLog(breakPoint4, 2, eps)).thenReturn(0.0);
         Mockito.when(logBase.solveLog(breakPoint4, 3, eps)).thenReturn(1.0);
         Mockito.when(logBase.solveLog(breakPoint4, 5, eps)).thenReturn(1.0);
         Mockito.when(logBase.solveLog(breakPoint4, 10, eps)).thenReturn(0.0);
 
-        assertEquals(Double.NEGATIVE_INFINITY, solver.solveSystem(breakPoint4, eps));
+        assertEquals(Double.NEGATIVE_INFINITY, solver.solveSystem(breakPoint4, eps), delta);
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {1.0, Double.MAX_VALUE, Double.POSITIVE_INFINITY})
+    void testIndeterminacy(final double x) {
+        assertEquals(0.0, solver.solveSystem(x, 1e-8), delta);
     }
 }

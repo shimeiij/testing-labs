@@ -11,7 +11,9 @@ public class LogBaseN implements CSVInterface {
         if (x == 1.0) {
             return 0.0;
         }
-        if (x == Math.E) return 1.0;
+        if (x == Math.E){
+            return 1.0;
+        }
         int k = 0;
         double y = x;
         while (y > Math.E)
@@ -28,7 +30,7 @@ public class LogBaseN implements CSVInterface {
             n *= -((y-1)*(i-1))/i;
             sum += n;
         }
-        double res = k + sum;
+        final double res = k + sum;
         writeToCsv(buildCSVRes(x, res, Math.E), FILENAME);
         return res;
     }

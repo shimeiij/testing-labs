@@ -26,18 +26,17 @@ public class SystemSolver {
 
     public Double solveSystem(final double x,final double eps)
     {
-
         if (x <= 0) {
             if (x == Double.NEGATIVE_INFINITY){
                 return Double.NaN;
             }
-            final double cosRes = cos.cos(x, eps),
-                    sinRes = sinFunc.solveFunc(x, eps),
-                    cotRes = cotFunc.solveFunc(x, eps),
-                    secRes = secFunc.solveFunc(x, eps);
+            final double cotRes = cotFunc.solveFunc(x, eps);
             if (cotRes == Double.POSITIVE_INFINITY || cotRes == Double.NEGATIVE_INFINITY) {
                 return cotRes;
             }
+            final double cosRes = cos.cos(x, eps),
+                    sinRes = sinFunc.solveFunc(x, eps),
+                    secRes = secFunc.solveFunc(x, eps);
             return Math.pow(cosRes*sinRes*cotRes, 2)*cotRes - secRes/cotRes;
         } else {
             if (x == Double.MAX_VALUE || x == Double.POSITIVE_INFINITY){
@@ -59,19 +58,19 @@ public class SystemSolver {
         }
     }
 
-    public void setSinFunc(SinFunc sinFunc) {
+    public void setSinFunc(final SinFunc sinFunc) {
         this.sinFunc = sinFunc;
     }
 
-    public void setCotFunc(CotFunc cotFunc) {
+    public void setCotFunc(final CotFunc cotFunc) {
         this.cotFunc = cotFunc;
     }
 
-    public void setSecFunc(SecFunc secFunc) {
+    public void setSecFunc(final SecFunc secFunc) {
         this.secFunc = secFunc;
     }
 
-    public void setLogBase(LogBase logBase) {
+    public void setLogBase(final LogBase logBase) {
         this.logBase = logBase;
     }
 
