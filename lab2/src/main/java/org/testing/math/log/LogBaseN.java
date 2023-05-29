@@ -2,9 +2,11 @@ package org.testing.math.log;
 
 import org.testing.math.CSVInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LogBaseN  implements CSVInterface {
+    List<String> resList = new ArrayList<>();
 
     public Double ln(final double x, final double eps) {
         if (x <= 0) {
@@ -35,5 +37,11 @@ public class LogBaseN  implements CSVInterface {
         final double res = k + sum;
         this.msg.add(buildCSVRes(x, res));
         return res;
+    }
+
+    public void addRes(final double x, final double res) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(x).append(',').append(res);
+        resList.add(builder.toString());
     }
 }

@@ -2,7 +2,11 @@ package org.testing.math.trig;
 
 import org.testing.math.CSVInterface;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CosFunc  implements CSVInterface {
+    List<String> resList = new ArrayList<>();
 
     public double cos(final double x,final double eps) {
         double n = 1.0;
@@ -21,6 +25,12 @@ public class CosFunc  implements CSVInterface {
         }
         this.msg.add(buildCSVRes(x, sum));
         return sum;
+    }
+
+    public void addRes(final double x, final double res) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(x).append(',').append(res);
+        resList.add(builder.toString());
     }
 
 }

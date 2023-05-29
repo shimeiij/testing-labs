@@ -5,10 +5,6 @@ import org.testing.math.log.LogBase;
 import org.testing.math.log.LogBaseN;
 import org.testing.math.trig.*;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class SystemSolver {
     LogBaseN ln;
     CosFunc cos;
