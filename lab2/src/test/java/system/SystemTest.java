@@ -58,15 +58,15 @@ class SystemTest {
 
         final double breakPoint4 = 1.0;
         Mockito.when(logBase.solveLog(breakPoint4, 2, eps)).thenReturn(0.0);
-        Mockito.when(logBase.solveLog(breakPoint4, 3, eps)).thenReturn(1.0);
-        Mockito.when(logBase.solveLog(breakPoint4, 5, eps)).thenReturn(1.0);
+        Mockito.when(logBase.solveLog(breakPoint4, 3, eps)).thenReturn(0.0);
+        Mockito.when(logBase.solveLog(breakPoint4, 5, eps)).thenReturn(0.0);
         Mockito.when(logBase.solveLog(breakPoint4, 10, eps)).thenReturn(0.0);
 
-        assertEquals(Double.NEGATIVE_INFINITY, solver.solveSystem(breakPoint4, eps), delta);
+        assertEquals(Double.POSITIVE_INFINITY, solver.solveSystem(breakPoint4, eps), delta);
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {1.0, Double.MAX_VALUE, Double.POSITIVE_INFINITY})
+    @ValueSource(doubles = {Double.MAX_VALUE, Double.POSITIVE_INFINITY})
     void testIndeterminacy(final double x) {
         assertEquals(0.0, solver.solveSystem(x, 1e-8), delta);
     }

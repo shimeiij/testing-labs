@@ -50,7 +50,7 @@ public class SystemSolver {
             final double num = ((1.0-log2)*(loge-log3))*log5;
             final double den = Math.pow(log3, 2)*lg*log3;
             if (num == 0.0 && den == 0.0){
-                return 0.0;
+                return Double.POSITIVE_INFINITY;
             }
             else {
                 return num/den;

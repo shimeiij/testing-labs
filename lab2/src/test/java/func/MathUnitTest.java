@@ -28,7 +28,7 @@ class MathUnitTest {
 
 
         @ParameterizedTest
-        @ValueSource(doubles = {0.01, 0.5, 1.0, 3.0, Math.E, 1e10})
+        @ValueSource(doubles = {1.0, 0.5, 0.01, 3.0, Math.E, 1e10})
         void testLn(final double x) {
             assertEquals(Math.log(x), ln.ln(x, eps), testDelta);
         }

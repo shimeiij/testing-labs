@@ -8,9 +8,9 @@ public class LogBaseN implements CSVInterface {
         if (x <= 0) {
             throw new ArithmeticException("argument must be > 0");
         }
-        if (x == 1.0) {
-            return 0.0;
-        }
+//        if (x == 1.0) {
+//            return 0.0;
+//        }
         if (x == Math.E){
             return 1.0;
         }
