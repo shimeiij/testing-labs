@@ -15,8 +15,8 @@ public class SecFunc extends AbsTrigFunc {
         return res;
     }
 
-    @Override
-    public void setBaseTrigFunc(final CosFunc cos) {
-        this.cos = cos;
-    }
+//    @Override
+//    public void setBaseTrigFunc(final CosFunc cos) {
+//        this.cos = cos;
+//    }
 }

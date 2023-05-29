@@ -20,7 +20,7 @@ public interface CSVInterface {
                                final Double base) {
         final StringBuilder stringBuilder = new StringBuilder(getClass().getSimpleName());
         if (base != null){
-            stringBuilder.append(base);
+            stringBuilder.append("=").append(base);
         }
         stringBuilder.append('(').append(x).append("),")
                 .append(res)

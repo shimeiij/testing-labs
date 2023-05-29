@@ -11,6 +11,7 @@ public class LogBaseN implements CSVInterface {
         if (x == 1.0) {
             return 0.0;
         }
+        if (x == Math.E) return 1.0;
         int k = 0;
         double y = x;
         while (y > Math.E)

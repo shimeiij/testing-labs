@@ -6,6 +6,6 @@ public abstract class AbsLogFunc implements CSVInterface {
     LogBaseN ln;
 
     public abstract Double solveLog(double x, double base, double eps);
-    public abstract void setLn(LogBaseN ln);
+//    public abstract void setLn(LogBaseN ln);
 
 }

@@ -19,9 +19,8 @@ public class LogBase extends AbsLogFunc {
         return res;
     }
 
-    @Override
-    public void setLn(final LogBaseN ln) {
-        this.ln = ln;
-    }
-
+//    @Override
+//    public void setLn(final LogBaseN ln) {
+//        this.ln = ln;
+//    }
 }

@@ -6,5 +6,5 @@ public abstract class AbsTrigFunc implements CSVInterface {
     CosFunc cos;
 
     public abstract Double solveFunc(double x, double eps);
-    public abstract void setBaseTrigFunc(CosFunc cos);
+//    public abstract void setBaseTrigFunc(CosFunc cos);
 }
