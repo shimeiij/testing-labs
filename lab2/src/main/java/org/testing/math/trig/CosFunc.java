@@ -8,6 +8,12 @@ import java.util.List;
 public class CosFunc  implements CSVInterface {
     List<String> resList = new ArrayList<>();
 
+    public void addRes(final double x, final double res) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(x).append(',').append(res);
+        resList.add(builder.toString());
+    }
+
     public double cos(final double x,final double eps) {
         double n = 1.0;
         double sum = 0.0;
@@ -20,17 +26,15 @@ public class CosFunc  implements CSVInterface {
         }
         final double res = Math.ceil(sum/eps)*eps;
         if (res == 0.0){
-            this.msg.add(buildCSVRes(x, res));
+            this.MSG.add(buildCSVRes(x, res));
             return res;
         }
-        this.msg.add(buildCSVRes(x, sum));
+        this.MSG.add(buildCSVRes(x, sum));
+        addRes(x, res);
         return sum;
     }
 
-    public void addRes(final double x, final double res) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(x).append(',').append(res);
-        resList.add(builder.toString());
+    public List<String> getResList() {
+        return resList;
     }
-
 }

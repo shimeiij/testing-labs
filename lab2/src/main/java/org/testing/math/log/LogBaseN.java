@@ -8,6 +8,12 @@ import java.util.List;
 public class LogBaseN  implements CSVInterface {
     List<String> resList = new ArrayList<>();
 
+    public void addRes(final double x, final double res) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(x).append(',').append(res);
+        resList.add(builder.toString());
+    }
+
     public Double ln(final double x, final double eps) {
         if (x <= 0) {
             throw new ArithmeticException("argument must be > 0");
@@ -35,13 +41,8 @@ public class LogBaseN  implements CSVInterface {
             sum += n;
         }
         final double res = k + sum;
-        this.msg.add(buildCSVRes(x, res));
+        this.MSG.add(buildCSVRes(x, res));
+        addRes(x, res);
         return res;
-    }
-
-    public void addRes(final double x, final double res) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(x).append(',').append(res);
-        resList.add(builder.toString());
     }
 }

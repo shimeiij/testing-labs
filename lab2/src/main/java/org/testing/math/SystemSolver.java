@@ -1,17 +1,20 @@
 package org.testing.math;
 
-import org.testing.math.log.AbsLogFunc;
 import org.testing.math.log.LogBase;
 import org.testing.math.log.LogBaseN;
 import org.testing.math.trig.*;
 
-public class SystemSolver {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SystemSolver implements CSVInterface{
     LogBaseN ln;
     CosFunc cos;
-    AbsTrigFunc sinFunc;
-    AbsTrigFunc cotFunc;
-    AbsTrigFunc secFunc;
-    AbsLogFunc logBase;
+    SinFunc sinFunc;
+    CotFunc cotFunc;
+    SecFunc secFunc;
+    LogBase logBase;
+    List<String> systemRes = new ArrayList<>();
 
 
     public SystemSolver(final LogBaseN ln,
@@ -19,10 +22,6 @@ public class SystemSolver {
         super();
         this.ln = ln;
         this.cos = cos;
-    }
-
-    private void printRes(CSVInterface csvObj) {
-        csvObj.writeToCsv();
     }
 
     public Double solveSystem(final double x,
@@ -35,13 +34,11 @@ public class SystemSolver {
 
             final double cotRes = cotFunc.solveFunc(x, eps);
             if (cotRes == Double.POSITIVE_INFINITY || cotRes == Double.NEGATIVE_INFINITY) {
-                printRes(cotFunc);
                 return cotRes;
             }
             final double cosRes = cos.cos(x, eps),
                     sinRes = sinFunc.solveFunc(x, eps),
                     secRes = secFunc.solveFunc(x, eps);
-            printRes(cotFunc);
             return Math.pow(cosRes*sinRes*cotRes, 2)*cotRes - secRes/cotRes;
         } else {
             logBase = new LogBase(ln);
@@ -55,7 +52,6 @@ public class SystemSolver {
                     loge = ln.ln(x, eps);
             final double num = ((1.0-log2)*(loge-log3))*log5;
             final double den = Math.pow(log3, 2)*lg*log3;
-            printRes(logBase);
             if (num == 0.0 && den == 0.0){
                 return Double.POSITIVE_INFINITY;
             }
@@ -81,6 +77,38 @@ public class SystemSolver {
         this.logBase = logBase;
     }
 
+    public LogBaseN getLn() {
+        return ln;
+    }
 
+    public CosFunc getCos() {
+        return cos;
+    }
+
+    public SinFunc getSinFunc() {
+        return sinFunc;
+    }
+
+    public CotFunc getCotFunc() {
+        return cotFunc;
+    }
+
+    public SecFunc getSecFunc() {
+        return secFunc;
+    }
+
+    public LogBase getLogBase() {
+        return logBase;
+    }
+
+    public void addRes(final double x, final double res) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(x).append(',').append(res);
+        systemRes.add(builder.toString());
+    }
+
+    public List<String> getSystemRes() {
+        return systemRes;
+    }
 
 }

@@ -14,6 +14,12 @@ public class LogBase extends AbsLogFunc {
     }
 
 
+    public void addRes(final double x, final double res) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(x).append(',').append(res);
+        resList.add(builder.toString());
+    }
+
     @Override
     public Double solveLog(final double x,
                            final double base,
@@ -23,23 +29,13 @@ public class LogBase extends AbsLogFunc {
         }
         this.base = base;
         final double res = ln.ln(x, eps)/ln.ln(base, eps);
-        this.msg.add(buildCSVRes(x, res));
+        this.MSG.add(buildCSVRes(x, res));
         addRes(x, res);
         return res;
-    }
-
-    public void addRes(final double x, final double res) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(x).append(',').append(res);
-        resList.add(builder.toString());
     }
 
     public List<String> getResList() {
         return resList;
     }
 
-    //    @Override
-//    public void setLn(final LogBaseN ln) {
-//        this.ln = ln;
-//    }
 }

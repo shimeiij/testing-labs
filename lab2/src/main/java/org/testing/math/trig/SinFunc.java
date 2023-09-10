@@ -14,7 +14,7 @@ public class SinFunc extends AbsTrigFunc {
     }
 
     public void addRes(final double x, final double res) {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append(x).append(',').append(res);
         resList.add(builder.toString());
     }
@@ -22,11 +22,16 @@ public class SinFunc extends AbsTrigFunc {
     @Override
     public Double solveFunc(final double x, final double eps)  {
         final double res = cos.cos(Math.PI/2 - x, eps);
-        this.msg.add(buildCSVRes(x, res));
+        this.MSG.add(buildCSVRes(x, res));
+        addRes(x, res);
         return res;
     }
 
-//    @Override
+    public List<String> getResList() {
+        return resList;
+    }
+
+    //    @Override
 //    public void setBaseTrigFunc(final CosFunc cos) {
 //        this.cos = cos;
 //    }

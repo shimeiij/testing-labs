@@ -15,20 +15,25 @@ public class CotFunc extends AbsTrigFunc{
         resList = new ArrayList<>();
     }
 
-    @Override
-    public Double solveFunc(final double x,final double eps) {
-        final double res = cos.cos(x, eps)/sinFunc.solveFunc(x, eps);
-        this.msg.add(buildCSVRes(x, res));
-        return res;
-    }
-
     public void addRes(final double x, final double res) {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append(x).append(',').append(res);
         resList.add(builder.toString());
     }
 
-//    @Override
+    @Override
+    public Double solveFunc(final double x,final double eps) {
+        final double res = cos.cos(x, eps)/sinFunc.solveFunc(x, eps);
+        this.MSG.add(buildCSVRes(x, res));
+        addRes(x, res);
+        return res;
+    }
+
+    public List<String> getResList() {
+        return resList;
+    }
+
+    //    @Override
 //    public void setBaseTrigFunc(final CosFunc cos) {
 //        this.cos = cos;
 //    }
