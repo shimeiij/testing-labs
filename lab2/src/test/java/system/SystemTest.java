@@ -110,7 +110,7 @@ class SystemTest {
         solver.getSecFunc().writeToCsv(solver.getSecFunc().getResList());
         solver.getSinFunc().writeToCsv(solver.getSinFunc().getResList());
 
-        solver.getLogBase().writeToCsv(solver.getLogBase().getResList());
+//        solver.getLogBase().writeToCsv(solver.getLogBase().getResList());
     }
 
     @ParameterizedTest
