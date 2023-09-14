@@ -51,12 +51,4 @@ class TrigUnitTest {
         assertEquals(Double.NEGATIVE_INFINITY, secFunc.solveFunc(Math.PI/2, eps), testDelta);
     }
 
-//    @AfterAll
-//    void writeToCSV() {
-//        cos.writeToCsv(cos.getResList());
-//        sinFunc.writeToCsv(sinFunc.getResList());
-//        cotFunc.writeToCsv(cotFunc.getResList());
-//        secFunc.writeToCsv(secFunc.getResList());
-//    }
-
 }

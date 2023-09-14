@@ -1,5 +1,6 @@
 package org.testing.math.log;
 
+
 public class LogBase extends AbsLogFunc {
     double base;
 
@@ -9,19 +10,17 @@ public class LogBase extends AbsLogFunc {
     }
 
     @Override
-    public Double solveLog(final double x,
-                           final double base,
-                           final double eps) {
+    public Double solveLog(final double x, final double base, final double eps) {
         if (base == 1 || base <= 0) {
             throw new ArithmeticException("invalid base");
         }
         this.base = base;
-        double natLog = ln.ln(x, eps);
+        final double natLog = ln.ln(x, eps);
         double res;
-        if (base != 10) {
-            res = natLog/ln.ln(base, eps);
-        } else {
+        if (base == 10) {
             res = natLog/2.303;
+        } else {
+            res = natLog/ln.ln(base, eps);
         }
         return res;
     }

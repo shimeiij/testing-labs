@@ -16,7 +16,10 @@ public class LogBaseN implements CSVInterface {
             return 1.0;
         }
 
-        double m = (x - 1) / (x + 1), sum = 0, im = 0, term = 1;
+        final double m = (x - 1) / (x + 1);
+        double im;
+        double term = 1;
+        double sum = 0;
         int n = 1;
         while (Math.abs(term) > eps) {
             im = 2*n-1;

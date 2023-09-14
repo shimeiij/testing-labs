@@ -4,9 +4,6 @@ import org.testing.math.log.LogBase;
 import org.testing.math.log.LogBaseN;
 import org.testing.math.trig.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SystemSolver implements CSVInterface{
     LogBaseN ln;
     CosFunc cos;
@@ -14,7 +11,6 @@ public class SystemSolver implements CSVInterface{
     CotFunc cotFunc;
     SecFunc secFunc;
     LogBase logBase;
-    List<String> systemRes = new ArrayList<>();
 
 
     public SystemSolver(final LogBaseN ln,
@@ -76,39 +72,4 @@ public class SystemSolver implements CSVInterface{
     public void setLogBase(final LogBase logBase) {
         this.logBase = logBase;
     }
-
-    public LogBaseN getLn() {
-        return ln;
-    }
-
-    public CosFunc getCos() {
-        return cos;
-    }
-
-    public SinFunc getSinFunc() {
-        return sinFunc;
-    }
-
-    public CotFunc getCotFunc() {
-        return cotFunc;
-    }
-
-    public SecFunc getSecFunc() {
-        return secFunc;
-    }
-
-    public LogBase getLogBase() {
-        return logBase;
-    }
-
-    public void addRes(final double x, final double res) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(x).append(',').append(res);
-        systemRes.add(builder.toString());
-    }
-
-    public List<String> getSystemRes() {
-        return systemRes;
-    }
-
 }
